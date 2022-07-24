@@ -12,7 +12,7 @@ for (const item of buttons) {
         let prod_id=e.target.parentElement.parentElement.parentElement.id;
         let prod_img=e.target.parentElement.previousElementSibling.src;
         let prod_name=e.target.previousElementSibling.previousElementSibling.innerText;
-        let prod_price=e.target.previousElementSibling.innerText;
+        let prod_price=e.target.previousElementSibling.children[0].innerText;
         
         let existProd=basket.find(item=>item.id===prod_id);
         
@@ -26,11 +26,6 @@ for (const item of buttons) {
                 count: 1
             });
         }
-        else
-        {
-            existProd.count++;
-        }
-
         localStorage.setItem('basket',JSON.stringify(basket));
     })
 }
