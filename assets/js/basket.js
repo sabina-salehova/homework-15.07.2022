@@ -29,7 +29,7 @@ function ShowAlert(){
                 </td>
                 <td>${item.price}</td>
                 <td>
-                    <button class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></button>
+                    <button onclick="deleteItem(${item.id})" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></button>
                 </td>
             </tr>
             `;
@@ -39,45 +39,12 @@ function ShowAlert(){
     }
 }
 
-ShowAlert();
-function RemoveElement(){
-    let btns=document.querySelectorAll('.btn');
+ShowAlert()
+
+function deleteItem(item_id){
     let basket=JSON.parse(localStorage.getItem('basket'));
-    var item_id;
-    var new_basket;
-    for (const item of btns) {
-        item.addEventListener('click',function(e){
-            e.preventDefault();
-            item_id=e.target.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.innerText;
-            new_basket= basket.filter(itemm => itemm.id != item_id);
-            localStorage.setItem('basket', JSON.stringify(new_basket));
-            e.target.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.parentElement.remove();
-        }) 
-    }
-  
-}
-
-RemoveElement();
-
-
-
-    // let btns=document.querySelectorAll('#tbody #btn');
-    // let basket=JSON.parse(localStorage.getItem('basket'));
-    // var new_basket;
-    // btns.forEach(element => {
-    //    element.addEventListener('click',function(e){
-    //         let rm=e.target.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.previousElementSibling.innerText;
-    //         new_basket=basket.filter(item => item.id !== rm);
-    //    })  
-    // });
-    // localStorage.setItem('basket', JSON.stringify(new_basket));
-
-
-function ShowResult(){
- 
-    let basket=JSON.parse(localStorage.getItem('basket'));
-
-    
+    let new_basket= basket.filter(item => item.id != item_id);
+    localStorage.setItem('basket', JSON.stringify(new_basket));    
 }
 
 
