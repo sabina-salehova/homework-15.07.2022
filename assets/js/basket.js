@@ -38,8 +38,8 @@ function ShowAlert(){
         document.getElementById('tbody').innerHTML=list;
     }
 }
+ShowAlert();
 
-ShowAlert()
 
 function deleteItem(item_id){
     let basket=JSON.parse(localStorage.getItem('basket'));
@@ -47,34 +47,36 @@ function deleteItem(item_id){
     localStorage.setItem('basket', JSON.stringify(new_basket));    
 }
 
-function calc(){
-    let basket=JSON.parse(localStorage.getItem('basket'));
-    let generalCount=0;
-    let generalPay=0;
-    for (var item of basket) {
-        generalCount+=item.count;
-        generalPay+=item.count*item.price;
-    }
-    document.getElementById('gCount').innerText=generalCount.toString();
-    document.getElementById('gPay').innerText=generalPay.toString();
-}
-
-calc();
 
 let inputs=document.querySelectorAll('input');
-let existProd;
 for (const item of inputs) {
     item.addEventListener('change',function(e){
         e.preventDefault();
         let basket=JSON.parse(localStorage.getItem('basket'));
         let prod_id=e.target.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.innerText;
         console.log(prod_id);
-        existProd=basket.find(item=>item.id===prod_id);
+        let existProd=basket.find(item=>item.id===prod_id);        
         console.log(item.value);
-        existProd.count=item.value;
-        existProd.price=item.value*existProd.price;
-        localStorage.setItem('basket',JSON.stringify(basket));        
+        existProd.price=Number(existProd.price/existProd.count);
+        console.log(existProd.price);
+        existProd.price=Number(item.value*existProd.price);
+        existProd.count=Number(item.value);
+        localStorage.setItem('basket',JSON.stringify(basket));
     })
 }
 
 
+function calc(){
+    let basket=JSON.parse(localStorage.getItem('basket'));
+    let generalCount=0;
+    let generalPay=0;
+    for (const item of basket) {
+        generalCount+=Number(item.count);
+        generalPay+=Number(item.price);
+    }
+    document.getElementById('gCount').innerText=generalCount;
+    document.getElementById('gPay').innerText=generalPay;
+}
+
+calc();
+   
